@@ -1,0 +1,63 @@
+BOOKTRACK | ETAPA 2 | ENTREGA 13/11/2026
+
+Requisitos: XAMPP com MySQL ligado, banco booktrack com as tabelas
+livro, leitura e avaliacao, e VS Code com o ambiente .venv que voce criou.
+
+ATENCAO: Copie os arquivos desta pasta para Downloads\booktrack.
+O arquivo conexao.py pode substituir a versao anterior: ele faz a
+mesma conexao e so executa o teste quando voce o abre diretamente.
+NAO apague sua pasta .venv. NAO envie .venv ao GitHub.
+
+No TERMINAL do VS Code, dentro de Downloads\booktrack:
+
+1) Instalar Flask (o conector MySQL ja foi instalado):
+   uv pip install --python .venv\Scripts\python.exe Flask
+
+2) Iniciar o XAMPP e ligar o MySQL.
+
+3) Executar a API no primeiro terminal:
+   .\.venv\Scripts\python.exe app.py
+
+   Deixe esse terminal aberto. No navegador, abra:
+   http://127.0.0.1:5000/
+   http://127.0.0.1:5000/livros
+
+4) No VS Code, Terminal > New Terminal. Execute:
+   .\.venv\Scripts\python.exe testar_etapa2.py
+
+   O programa vai cadastrar UM LIVRO, UMA LEITURA E UMA AVALIACAO
+   de teste no banco booktrack. Isso e esperado.
+   Resultado esperado: SUCESSO: cadastros e consultas da etapa 2 funcionaram!
+
+5) Envie ao GitHub os arquivos novos ou alterados (.py, requirements.txt,
+   .gitignore e este LEIA-ME-ETAPA2.txt). Mantenha o SQL e os diagramas.
+   Nao envie a pasta .venv.
+
+ARQUIVOS:
+- conexao.py: conecta ao banco; foi adaptado para nao testar ao importar.
+- livro.py, leitura.py, avaliacao.py: classes Python (POO).
+- dao.py: LivroDAO, LeituraDAO e AvaliacaoDAO, com INSERT e SELECT.
+- app.py: API Flask com GET e POST de livros, leituras e avaliacoes.
+- testar_etapa2.py: exercita os endpoints e comprova cadastro/consulta.
+- requirements.txt: dependencias.
+- .gitignore: impede envio acidental de .venv e outros arquivos locais.
+
+ROTAS:
+GET /                         Informa que API esta rodando.
+GET /livros                   Lista livros.
+POST /livros                  Cadastra livro.
+GET /livros/<id>              Consulta livro especifico.
+GET /leituras                 Lista leituras.
+POST /leituras                Cadastra leitura.
+GET /leituras/<id>            Consulta leitura especifica.
+GET /avaliacoes               Lista avaliacoes.
+POST /avaliacoes              Cadastra avaliacao.
+GET /avaliacoes/<id>          Consulta avaliacao especifica.
+
+OBSERVACOES:
+- A API usa o banco que voce ja criou, nao recria tabelas.
+- O usuario root sem senha corresponde ao XAMPP local usado no teste
+  anterior. Se houver outra configuracao, altere conexao.py.
+- Se aparecer 'Address already in use', existe outro processo na porta 5000.
+- O codigo e voltado para a etapa escolar e desenvolvimento local.
+- Para a entrega final sera necessario criar o front-end HTML/CSS/JS.

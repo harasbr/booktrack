@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#143c32">
+  <meta name="description" content="BookTrack: acompanhe livros, leituras e avaliações em um só lugar.">
+  <title>BookTrack | Minha biblioteca</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="BookTrack, início">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 25c-4-3-8.5-3.4-12.5-3.1V7.4C8 7 12.4 7.4 16 10.2c3.6-2.8 8-3.2 12.5-2.8v14.5c-4-.3-8.5.1-12.5 3.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 10.2V25" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <span><strong>BookTrack</strong><small>diário de leituras</small></span>
+      </a>
+      <div class="sidebar-label">MENU</div>
+      <nav class="sidebar-nav">
+        <a class="nav-link active" href="#inicio"><span class="nav-icon">◫</span> Visão geral</a>
+        <a class="nav-link" href="#biblioteca"><span class="nav-icon">▤</span> Minha biblioteca</a>
+        <a class="nav-link" href="#cadastrar"><span class="nav-icon">＋</span> Novo registro</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-quote">“Uma página de cada vez, uma história de cada vez.”</div>
+        <div class="sidebar-version">Projeto integrado • 2º TI</div>
+      </div>
+    </aside>
+
+    <main id="inicio" class="main-content">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">Meu espaço <span>/</span> Visão geral</div>
+        <span class="connection-status" id="status-conexao"><i class="status-dot"></i> Conectando ao banco...</span>
+      </header>
+
+      <section class="hero" aria-labelledby="titulo-principal">
+        <div class="hero-copy">
+          <span class="eyebrow hero-eyebrow">SUA JORNADA LITERÁRIA</span>
+          <h1 id="titulo-principal">Toda boa história merece ser <em>lembrada.</em></h1>
+          <p>Organize sua estante, acompanhe cada leitura e guarde o que achou de seus livros favoritos.</p>
+          <a class="button button-light" href="#cadastrar">Adicionar livro <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-arc"></div>
+          <div class="book book-one"><span></span></div>
+          <div class="book book-two"><span></span></div>
+          <div class="book book-three"><span></span></div>
+          <div class="art-shelf"></div>
+          <div class="art-star star-one">✦</div>
+          <div class="art-star star-two">✦</div>
+        </div>
+      </section>
+
+      <section class="overview section-block" aria-labelledby="titulo-numeros">
+        <div class="section-heading"><div><span class="eyebrow">MEU PROGRESSO</span><h2 id="titulo-numeros">Em números</h2></div><span class="minor-note">Atualizado com seus registros</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-icon stat-teal">▤</span><div><span class="stat-label">Livros na estante</span><strong id="stat-livros">0</strong></div></article>
+          <article class="stat-card"><span class="stat-icon stat-gold">◷</span><div><span class="stat-label">Lendo agora</span><strong id="stat-lendo">0</strong></div></article>
+          <article class="stat-card"><span class="stat-icon stat-rose">✓</span><div><span class="stat-label">Concluídos no ano</span><strong id="stat-concluidos">0</strong></div></article>
+          <article class="stat-card"><span class="stat-icon stat-violet">☆</span><div><span class="stat-label">Avaliações feitas</span><strong id="stat-avaliacoes">0</strong></div></article>
+        </div>
+      </section>
+
+      <section class="dashboard-grid section-block" aria-label="Resumo das leituras">
+        <article class="panel chart-panel">
+          <div class="panel-header"><div><span class="eyebrow">VISUALIZAÇÃO</span><h2>Leituras concluídas</h2><p>Quantidade por mês</p></div><label class="year-picker">Ano <select id="ano-estatisticas" aria-label="Ano das estatísticas"></select></label></div>
+          <div id="grafico-mensal" class="monthly-chart" role="img" aria-label="Gráfico de livros concluídos por mês"></div>
+        </article>
+        <article class="panel how-panel">
+          <div class="how-icon">✦</div>
+          <span class="eyebrow">COMO FUNCIONA</span>
+          <h2>Seu cantinho de leitura</h2>
+          <div class="how-step"><span>01</span><p><strong>Cadastre um livro</strong><small>Guarde título, autor e gênero.</small></p></div>
+          <div class="how-step"><span>02</span><p><strong>Acompanhe a leitura</strong><small>Marque o que está lendo ou concluiu.</small></p></div>
+          <div class="how-step"><span>03</span><p><strong>Avalie sua experiência</strong><small>Dê de 1 a 5 estrelas e comente.</small></p></div>
+        </article>
+      </section>
+
+      <section id="biblioteca" class="section-block library-section" aria-labelledby="titulo-biblioteca">
+        <div class="section-heading"><div><span class="eyebrow">MINHA COLEÇÃO</span><h2 id="titulo-biblioteca">Sua biblioteca</h2></div><span class="minor-note" id="total-listagem">0 livros encontrados</span></div>
+        <div class="library-toolbar">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="busca-livros" type="search" placeholder="Buscar por título, autor ou gênero..." aria-label="Buscar livros" maxlength="100"></label>
+          <select id="filtro-status" aria-label="Filtrar livros por status">
+            <option value="todos">Todos os status</option><option value="Quero ler">Quero ler</option><option value="Lendo">Lendo</option><option value="Concluído">Concluídos</option><option value="Sem leitura">Sem leitura</option>
+          </select>
+          <button class="button button-primary button-sm" type="button" id="botao-atualizar">Atualizar <span aria-hidden="true">↻</span></button>
+        </div>
+        <div id="mensagem-erro" class="notice error" role="alert" hidden></div>
+        <div id="lista-livros" class="books-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="cadastrar" class="section-block add-section" aria-labelledby="titulo-cadastrar">
+        <div class="section-heading"><div><span class="eyebrow">CONTINUE SUA HISTÓRIA</span><h2 id="titulo-cadastrar">Adicionar registro</h2></div><span class="minor-note">Os dados são salvos no MySQL</span></div>
+        <div class="form-layout">
+          <div class="form-panel panel">
+            <div class="tabs" role="tablist" aria-label="Tipo de cadastro">
+              <button class="tab active" role="tab" type="button" aria-selected="true" aria-controls="painel-livro" data-tab="livro">Novo livro</button>
+              <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="painel-leitura" data-tab="leitura">Leitura</button>
+              <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="painel-avaliacao" data-tab="avaliacao">Avaliação</button>
+            </div>
+            <div id="painel-livro" class="tab-panel" role="tabpanel">
+              <h3>Adicionar à estante</h3><p>Comece registrando as informações do livro.</p>
+              <form id="form-livro" class="form-fields">
+                <label>Título do livro <span>*</span><input name="titulo" required maxlength="100" placeholder="Ex.: Six of Crows" autocomplete="off"></label>
+                <label>Autor(a) <span>*</span><input name="autor" required maxlength="100" placeholder="Ex.: Leigh Bardugo" autocomplete="off"></label>
+                <label>Gênero literário <input name="genero" maxlength="50" placeholder="Ex.: Fantasia" autocomplete="off"></label>
+                <button class="button button-primary form-submit" type="submit">Salvar livro <span aria-hidden="true">↗</span></button>
+              </form>
+            </div>
+            <div id="painel-leitura" class="tab-panel" role="tabpanel" hidden>
+              <h3>Registrar uma leitura</h3><p>Selecione um livro e informe como está a leitura.</p>
+              <form id="form-leitura" class="form-fields">
+                <label>Livro <span>*</span><select name="id_livro" id="livro-da-leitura" required><option value="">Selecione um livro...</option></select></label>
+                <label>Situação <span>*</span><select name="status_leitura" id="status-leitura"><option value="Quero ler">Quero ler</option><option value="Lendo">Lendo</option><option value="Concluído">Concluído</option></select></label>
+                <label id="campo-data" hidden>Data de conclusão <span>*</span><input name="data_conclusao" id="data-conclusao" type="date"></label>
+                <button class="button button-primary form-submit" type="submit">Salvar leitura <span aria-hidden="true">↗</span></button>
+              </form>
+            </div>
+            <div id="painel-avaliacao" class="tab-panel" role="tabpanel" hidden>
+              <h3>Avaliar uma leitura</h3><p>Você pode avaliar uma leitura concluída que ainda não recebeu nota.</p>
+              <form id="form-avaliacao" class="form-fields">
+                <label>Leitura concluída <span>*</span><select name="id_leitura" id="leitura-da-avaliacao" required><option value="">Selecione uma leitura...</option></select></label>
+                <fieldset class="stars-field"><legend>Nota <span>*</span></legend><div class="stars-input" id="estrelas-input" role="radiogroup" aria-label="Nota de uma a cinco estrelas">
+                  <label><input type="radio" name="nota" value="1" required><span aria-label="1 estrela">★</span></label>
+                  <label><input type="radio" name="nota" value="2"><span aria-label="2 estrelas">★</span></label>
+                  <label><input type="radio" name="nota" value="3"><span aria-label="3 estrelas">★</span></label>
+                  <label><input type="radio" name="nota" value="4"><span aria-label="4 estrelas">★</span></label>
+                  <label><input type="radio" name="nota" value="5"><span aria-label="5 estrelas">★</span></label>
+                </div><div id="descricao-nota" class="field-hint">Selecione a quantidade de estrelas.</div></fieldset>
+                <label>Comentário <textarea name="comentario" rows="3" maxlength="255" placeholder="O que você achou da leitura?"></textarea></label>
+                <button class="button button-primary form-submit" type="submit">Salvar avaliação <span aria-hidden="true">↗</span></button>
+              </form>
+            </div>
+          </div>
+          <aside class="note-panel">
+            <div class="note-sticker">✳</div>
+            <span class="eyebrow">PARA RECORDAR</span>
+            <h3>Uma biblioteca é feita de histórias e memórias.</h3>
+            <p>Use este espaço para construir seu próprio histórico de leituras. Cada livro registrado é mais um capítulo da sua jornada.</p>
+            <div class="note-lines"><span></span><span></span><span></span></div>
+          </aside>
+        </div>
+      </section>
+      <footer class="footer"><span>BookTrack © <span id="ano-rodape"></span></span><span>Projeto integrado • Python, Flask, MySQL, HTML, CSS e JavaScript</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
